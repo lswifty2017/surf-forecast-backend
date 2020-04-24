@@ -1,0 +1,22 @@
+{
+  "name": "surf-forecast-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lswifty2017/surf-forecast-backend.git"
+  },
+  "author": "liam-swift",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lswifty2017/surf-forecast-backend/issues"
+  },
+  "homepage": "https://github.com/lswifty2017/surf-forecast-backend#readme"
+}
