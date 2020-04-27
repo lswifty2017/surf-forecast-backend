@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/lswifty2017/surf-forecast-backend/issues"
   },
-  "homepage": "https://github.com/lswifty2017/surf-forecast-backend#readme"
+  "homepage": "https://github.com/lswifty2017/surf-forecast-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "puppeteer": "^3.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
 }
