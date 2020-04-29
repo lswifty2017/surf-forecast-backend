@@ -30,7 +30,7 @@ const scrapeSwellLocations = async () => {
     await browser.close();
     return allLocationPaths;
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
   }
 };
 

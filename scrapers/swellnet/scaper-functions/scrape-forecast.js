@@ -2,6 +2,11 @@ const puppeteer = require('puppeteer');
 
 const scrapeSwellnetForecast = async path => {
   try {
+    const splitPath = path.split('/');
+    const country = splitPath[2];
+    const region = splitPath[3];
+    const beach = splitPath[4];
+
     const pageURL = `https://www.swellnet.com/${path}`;
 
     const browser = await puppeteer.launch();
@@ -91,12 +96,13 @@ const scrapeSwellnetForecast = async path => {
       forecast['country'] = country;
       forecast['region'] = region;
       forecast['beach'] = beach;
+      forecast['path'] = path;
     });
 
     await browser.close();
     return swellForecast;
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
   }
 };
 
