@@ -6,25 +6,34 @@ const getSwellnetData = async () => {
   try {
     console.log('Scraping swellnet');
     let scrapeTimer = 0;
+    let scrapeCount = 0;
 
     setInterval(() => {
       scrapeTimer += 1;
     }, 1000);
 
-    const bulkData = [];
+    let bulkData = [];
 
     const swellnetPaths = await scrapeSwellLocations();
 
-    for (const path of swellnetPaths) {
+    const samplePaths = swellnetPaths.slice(0, 2);
+
+    for (const path of samplePaths) {
+      // set to first 2 of 132 locations
       const forecastData = await scrapeForecast(path);
       const formattedData = formatForecastData(forecastData);
-      bulkData.concat(formattedData);
+      bulkData = bulkData.concat(formattedData);
+
+      console.log(bulkData);
+      scrapeCount += 1;
+      console.log(
+        `Scraped ${scrapeCount}/${swellnetPaths.length} swellnet reports`
+      );
     }
 
     console.log(
       `Scraping completed in ${Math.round(scrapeTimer / 60)} minutes`
     );
-
     return bulkData;
   } catch (err) {
     console.log(err);

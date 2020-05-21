@@ -40,7 +40,7 @@ const formatForecastData = forecasts => {
       formattedForecast['secondary_swell_height'] = secondary_swell_height;
       formattedForecast['wind_direction'] = wind_direction;
 
-      formattedForecast['date_time'] = formattedDateTime || null;
+      formattedForecast['date_time'] = formattedDateTime;
 
       formattedForecast['primary_swell_direction'] = primary_swell_direction
         ? primary_swell_direction.split(' ')[1].slice(1, -1)
