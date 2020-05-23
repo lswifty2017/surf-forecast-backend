@@ -22,16 +22,19 @@ const formatForecastData = forecasts => {
       const formattedForecast = {};
 
       const formattedDate = date
-        ? moment(date, 'DD-MM').format('DD-MM-YYYY')
+        ? moment(date, 'DD-MM').format('YYYY-MM-DD')
         : null;
 
-      const formattedTime = time ? moment(time, 'HHa').format('HH:mm') : null;
+      const formattedTime = time
+        ? moment(time, 'HHa').format('HH:mm:ss')
+        : null;
 
       const formattedDateTime =
         formattedDate && formattedTime
           ? `${formattedDate} ${formattedTime}`
           : null;
 
+      formattedForecast['id'] = `${path}_${formattedDate}_${formattedTime}`;
       formattedForecast['beach'] = beach;
       formattedForecast['country'] = country;
       formattedForecast['path'] = path;

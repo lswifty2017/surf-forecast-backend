@@ -5,6 +5,7 @@ const moment = require('moment');
 const { Sequelize } = require('sequelize');
 const { Pool, Client } = require('pg');
 const { aws } = require('./config');
+const Routes = require('./lib/routes');
 require('dotenv').config();
 
 const getSwellnetData = require('./scrapers/swellnet/swellnet-scraper');
@@ -47,9 +48,12 @@ app.get('/', (req, res) => {
   }
 
   const swellnetForecastDB = sequelize.define('swellnet_forecasts', {
-    date_time: {
-      type: Sequelize.DATE,
+    id: {
+      type: Sequelize.TEXT,
       primaryKey: true
+    },
+    date_time: {
+      type: Sequelize.DATE
     },
     path: {
       type: Sequelize.STRING

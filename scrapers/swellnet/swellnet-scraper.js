@@ -4,7 +4,7 @@ const formatForecastData = require('./scaper-functions/format-forecast-data');
 
 const getSwellnetData = async () => {
   try {
-    console.log('Scraping swellnet');
+    console.log('Scraping swellnet...');
     let scrapeTimer = 0;
     let scrapeCount = 0;
 
@@ -16,15 +16,11 @@ const getSwellnetData = async () => {
 
     const swellnetPaths = await scrapeSwellLocations();
 
-    const samplePaths = swellnetPaths.slice(0, 2);
-
-    for (const path of samplePaths) {
+    for (const path of swellnetPaths) {
       // set to first 2 of 132 locations
       const forecastData = await scrapeForecast(path);
       const formattedData = formatForecastData(forecastData);
       bulkData = bulkData.concat(formattedData);
-
-      console.log(bulkData);
       scrapeCount += 1;
       console.log(
         `Scraped ${scrapeCount}/${swellnetPaths.length} swellnet reports`
