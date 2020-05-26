@@ -1,18 +1,21 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const cron = require('node-cron');
 const moment = require('moment');
+const Routes = require('./lib/routes');
+const getSwellnetData = require('./scrapers/swellnet/swellnet-scraper');
+
 const { Sequelize } = require('sequelize');
 const { Pool, Client } = require('pg');
 const { aws } = require('./config');
-const Routes = require('./lib/routes');
-require('dotenv').config();
-
-const getSwellnetData = require('./scrapers/swellnet/swellnet-scraper');
 
 const rdsConfig = aws.rds_test;
 const app = express();
 const port = process.env.DEV_PORT || '8002';
+
+const sequelize = new Sequelize(rdsConfig.uri);
 
 app.get('/', (req, res) => {
   res.status(200).send('Surf forecast backend');
@@ -25,92 +28,16 @@ app.get('/', (req, res) => {
 // });
 
 (async () => {
-  // const client = new Client(rdsConfig);
-  // await client.connect(err => {
-  //   if (err) {
-  //     console.error('connection error', err.stack);
-  //   } else {
-  //     console.log('connected');
-  //   }
-  // });
-  // client.query('SELECT * FROM swellnet_forecast', (err, res) => {
-  //   console.log(err, res);
-  //   client.end();
-  // });
-
-  const sequelize = new Sequelize(rdsConfig.uri);
-
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+    console.log('Connection to AWS RDS has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
 
-  const swellnetForecastDB = sequelize.define('swellnet_forecasts', {
-    id: {
-      type: Sequelize.TEXT,
-      primaryKey: true
-    },
-    date_time: {
-      type: Sequelize.DATE
-    },
-    path: {
-      type: Sequelize.STRING
-    },
-    country: {
-      type: Sequelize.STRING
-    },
-    region: {
-      type: Sequelize.STRING
-    },
-    beach: {
-      type: Sequelize.STRING
-    },
-    surf_height: {
-      type: Sequelize.STRING
-    },
-    wind_direction: {
-      type: Sequelize.STRING
-    },
-    wind_speed: {
-      type: Sequelize.FLOAT
-    },
-    primary_swell_height: {
-      type: Sequelize.FLOAT
-    },
-    primary_swell_direction: {
-      type: Sequelize.STRING
-    },
-    primary_swell_period: {
-      type: Sequelize.FLOAT
-    },
-    secondary_swell_height: {
-      type: Sequelize.FLOAT
-    },
-    secondary_swell_direction: {
-      type: Sequelize.STRING
-    },
-    secondary_swell_period: {
-      type: Sequelize.FLOAT
-    },
-    review: {
-      type: Sequelize.TEXT
-    },
-    createdAt: {
-      type: Sequelize.DATE
-    },
-    updatedAt: {
-      type: Sequelize.DATE
-    }
-  });
-
   try {
     const swellnetData = await getSwellnetData();
-    console.log(swellnetData);
-    // const swellnetData = [{ date: moment() }];
-    await swellnetForecastDB.bulkCreate(swellnetData);
-    console.log('Successfully inserted scraped data into DB');
+    await swellnetForecastsDB.bulkCreate(swellnetData);
   } catch (err) {
     console.log(err);
   }

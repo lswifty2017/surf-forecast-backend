@@ -34,7 +34,6 @@ const formatForecastData = forecasts => {
           ? `${formattedDate} ${formattedTime}`
           : null;
 
-      formattedForecast['id'] = `${path}_${formattedDate}_${formattedTime}`;
       formattedForecast['beach'] = beach;
       formattedForecast['country'] = country;
       formattedForecast['path'] = path;
