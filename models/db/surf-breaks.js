@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
-  
-const surfBreaksDB = sequelize.define('surf_breaks', {
+const rds = require('./rds');
+
+const surfBreaksDB = rds.define('surf_breaks', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -24,6 +25,6 @@ const surfBreaksDB = sequelize.define('surf_breaks', {
   updatedAt: {
     type: Sequelize.DATE
   }
-})
+});
 
 module.exports = surfBreaksDB;

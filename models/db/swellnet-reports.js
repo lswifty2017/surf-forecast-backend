@@ -1,9 +1,10 @@
 const { Sequelize } = require('sequelize');
+const rds = require('./rds');
 
-const swellnetForecastsDB = sequelize.define('swellnet_forecasts', {
+const swellnetForecastsDB = rds.define('swellnet_forecasts', {
   id: {
     type: Sequelize.INTEGER,
-    primaryKey: true, 
+    primaryKey: true,
     autoIncrement: true
   },
   path: {
@@ -49,3 +50,5 @@ const swellnetForecastsDB = sequelize.define('swellnet_forecasts', {
     type: Sequelize.DATE
   }
 });
+
+module.exports = swellnetForecastsDB;
