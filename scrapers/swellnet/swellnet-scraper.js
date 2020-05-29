@@ -2,6 +2,7 @@ const scrapeSwellLocations = require('./scaper-functions/scrape-locations');
 const scrapeForecast = require('./scaper-functions/scrape-forecast');
 const formatForecastData = require('./scaper-functions/format-forecast-data');
 const swellnetForecastsDB = require('../../models/db/swellnet-reports');
+const createScrapeReport = require('./scaper-functions/scrape-report');
 
 const scrapeSwellnet = async () => {
   try {
@@ -28,6 +29,9 @@ const scrapeSwellnet = async () => {
         `Scraped ${scrapeCount}/${swellnetPaths.length} swellnet reports`
       );
     }
+
+    const scrapeReport = createScrapeReport(bulkData);
+    swellnetReportEmail(scrapeReport);
 
     await swellnetForecastsDB.bulkCreate(bulkData);
     console.log('Bulk swellnet data imported into db');

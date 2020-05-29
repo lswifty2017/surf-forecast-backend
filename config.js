@@ -15,6 +15,14 @@ const config = {
       password: process.env.TEST_RDS_PASSWORD,
       uri: process.env.TEST_RDS_URI
     }
+  },
+  sendgrid: {
+    host: 'smtp.sendgrid.net',
+    port: 587,
+    auth: {
+      user: process.env.SENDGRID_USER,
+      pass: process.env.SENDGRID_PASSWORD
+    }
   }
 };
 
