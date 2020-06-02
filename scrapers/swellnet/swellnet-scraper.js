@@ -3,6 +3,7 @@ const scrapeForecast = require('./scaper-functions/scrape-forecast');
 const formatForecastData = require('./scaper-functions/format-forecast-data');
 const swellnetForecastsDB = require('../../models/db/swellnet-reports');
 const createScrapeReport = require('./scaper-functions/scrape-report');
+const swellnetReportEmail = require('../../lib/mailer/swellnet-report/swellnet-report-email');
 
 const scrapeSwellnet = async () => {
   try {
@@ -19,7 +20,7 @@ const scrapeSwellnet = async () => {
     const swellnetPaths = await scrapeSwellLocations();
     const samplePaths = swellnetPaths.slice(0, 2);
 
-    for (const path of samplePaths) {
+    for (const path of swellnetPaths) {
       const forecastData = await scrapeForecast(path);
       const formattedData = formatForecastData(forecastData);
       bulkData = bulkData.concat(formattedData);

@@ -13,7 +13,7 @@ const createScrapeReport = scrapedData => {
     const entries = Object.entries(data);
     entries.forEach(entry => {
       if (entry[1] === null) {
-        nullReport.nullValues.push(entry[0]);
+        nullReport.null_values.push(entry[0]);
       }
     });
 
