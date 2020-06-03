@@ -7,6 +7,7 @@ const config = {
       host: process.env.RDS_HOSTNAME,
       password: process.env.RDS_PASSWORD,
       port: process.env.RDS_PORT,
+      uri: process.env.RDS_URI,
     },
     rds_test: {
       user: process.env.TEST_RDS_USERNAME,
