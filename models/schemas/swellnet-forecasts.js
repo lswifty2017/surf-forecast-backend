@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-const rds = require('./db-config/aws-rds');
+const waverDB = require('../waver-db');
 
-const SwellnetForecasts = rds.define('swellnet_forecasts', {
+const SwellnetForecasts = waverDB.define('swellnet_forecasts', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,

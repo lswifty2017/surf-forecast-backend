@@ -1,17 +1,15 @@
 const { Sequelize } = require('sequelize');
-const { aws } = require('../../config');
+const config = require('config');
 
-const rdsConfig = aws.rds;
-
-const rds = new Sequelize(rdsConfig.uri);
+const db = new Sequelize(config.get('heroku.pg_db'));
 
 (async () => {
   try {
-    await rds.authenticate();
+    await db.authenticate();
     console.log('Connection to AWS RDS has been established successfully.');
   } catch (err) {
     console.log(err);
   }
 })();
 
-module.exports = rds;
+module.exports = db;

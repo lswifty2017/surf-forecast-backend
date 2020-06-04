@@ -1,5 +1,5 @@
 const SwellnetSpreadsheet = require('../models/swellnet-spreadsheet');
-const SwellnetForecasts = require('../models/swellnet-forecasts');
+const SwellnetForecasts = require('../models/schemas/swellnet-forecasts');
 
 exports.getAllForecasts = async (req, res) => {
   try {

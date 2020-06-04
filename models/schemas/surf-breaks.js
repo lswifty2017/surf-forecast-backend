@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-const rds = require('./db-config/aws-rds');
+const waverDB = require('../waver-db');
 
-const SurfBreaks = rds.define('surf_breaks', {
+const SurfBreaks = waverDB.define('surf_breaks', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
