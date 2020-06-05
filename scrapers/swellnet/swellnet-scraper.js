@@ -2,7 +2,7 @@ const scrapeSwellLocations = require('./scaper-functions/scrape-locations');
 const scrapeForecast = require('./scaper-functions/scrape-forecast');
 const formatForecastData = require('./scaper-functions/format-forecast-data');
 const SwellnetForecasts = require('../../models/schemas/swellnet-forecasts');
-const createScrapeReport = require('./scaper-functions/scrape-report');
+const createNullReport = require('./scaper-functions/scrape-null-report');
 const swellnetReportEmail = require('../../lib/mailer/swellnet-report/swellnet-report-email');
 
 const scrapeSwellnet = async () => {
@@ -31,7 +31,7 @@ const scrapeSwellnet = async () => {
       );
     }
 
-    const scrapeReport = createScrapeReport(bulkData);
+    const scrapeReport = createNullReport(bulkData);
     swellnetReportEmail(scrapeReport);
 
     await SwellnetForecasts.bulkCreate(bulkData);

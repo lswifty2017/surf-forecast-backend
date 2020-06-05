@@ -1,26 +1,28 @@
 const moment = require('moment');
 
-const createScrapeReport = scrapedData => {
+const createNullReport = (scrapedData) => {
   const nullReports = [];
 
-  scrapedData.forEach(data => {
+  scrapedData.forEach((data) => {
     const nullReport = {
       path: data.path,
       date_time: data.date_time,
-      null_values: []
+      null_values: [],
     };
 
     const entries = Object.entries(data);
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry[1] === null) {
         nullReport.null_values.push(entry[0]);
       }
     });
 
-    nullReports.push(nullReport);
+    if (nullReport.null_values.length) {
+      nullReports.push(nullReport);
+    }
   });
 
   return nullReports;
 };
 
-module.exports = createScrapeReport;
+module.exports = createNullReport;
