@@ -6,7 +6,9 @@ const db = new Sequelize(config.get('heroku.pg_db'));
 (async () => {
   try {
     await db.authenticate();
-    console.log('Connection to AWS RDS has been established successfully.');
+    console.log(
+      'Connection to heroku postgres DB has been established successfully.'
+    );
   } catch (err) {
     console.log(err);
   }

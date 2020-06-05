@@ -17,8 +17,8 @@ app.use('/', routes);
 
 (async () => {
   try {
-    // await scrapeSwellnet();
-    await updateSwellnetSheet();
+    await scrapeSwellnet();
+    // await updateSwellnetSheet();
   } catch (err) {
     console.log(err);
   }
