@@ -6,7 +6,7 @@ const routes = require('./routes/index');
 const scrapeSwellnet = require('./scrapers/swellnet/swellnet-scraper');
 
 const app = express();
-const port = process.env.DEV_PORT || '8002';
+const port = process.env.PORT || process.env.DEV_PORT;
 
 app.use('/', routes);
 
