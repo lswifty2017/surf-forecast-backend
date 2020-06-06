@@ -10,14 +10,20 @@ const port = process.env.PORT || process.env.DEV_PORT;
 
 app.use('/', routes);
 
-cron.schedule('0 18 * * *', async () => {
-  try {
-    await scrapeSwellnet();
-    console.log('running a task every minute');
-  } catch (err) {
-    console.log(err);
+cron.schedule(
+  '38 18 * * *',
+  async () => {
+    try {
+      await scrapeSwellnet();
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  {
+    scheduled: true,
+    timezone: 'Australia/Sydney',
   }
-});
+);
 
 app.listen(port, () => {
   console.log(`Listening to requests on http://localhost:${port}`);
