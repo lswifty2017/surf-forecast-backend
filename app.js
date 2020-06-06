@@ -11,7 +11,7 @@ const port = process.env.PORT || process.env.DEV_PORT;
 app.use('/', routes);
 
 cron.schedule(
-  '47 20 * * *',
+  '0 21 * * *',
   async () => {
     try {
       await scrapeSwellnet();
