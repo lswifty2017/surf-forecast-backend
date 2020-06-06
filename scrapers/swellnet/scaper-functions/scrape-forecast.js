@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const scrapeSwellnetForecast = async path => {
+const scrapeSwellnetForecast = async (path) => {
   try {
     const splitPath = path.split('/');
     const country = splitPath[2];
@@ -9,7 +9,7 @@ const scrapeSwellnetForecast = async path => {
 
     const pageURL = `https://www.swellnet.com/${path}`;
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
 
     await page.setDefaultNavigationTimeout(0);
@@ -22,13 +22,13 @@ const scrapeSwellnetForecast = async path => {
         '.forecast_text_wrapper .day'
       );
 
-      forecastTableDays.forEach(day => {
+      forecastTableDays.forEach((day) => {
         const date = day.querySelector('.summary .date_time_date').innerHTML;
         const forecastTimes = day.querySelectorAll('div.time:not(.summary)');
 
-        forecastTimes.forEach(time => {
+        forecastTimes.forEach((time) => {
           const forecastByTime = {
-            date: date
+            date: date,
           };
 
           forecastByTime['time'] = time.querySelector('.date_time_time')
@@ -94,7 +94,7 @@ const scrapeSwellnetForecast = async path => {
       return scrapedSwellData;
     });
 
-    swellForecast.forEach(forecast => {
+    swellForecast.forEach((forecast) => {
       forecast['country'] = country;
       forecast['region'] = region;
       forecast['beach'] = beach;

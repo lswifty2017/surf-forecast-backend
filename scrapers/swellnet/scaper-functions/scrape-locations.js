@@ -4,7 +4,7 @@ const scrapeSwellLocations = async () => {
   try {
     const pageURL = 'https://www.swellnet.com/reports/';
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.goto(pageURL);
 
@@ -19,7 +19,7 @@ const scrapeSwellLocations = async () => {
         '.location-list a'
       );
 
-      locations.forEach(location => {
+      locations.forEach((location) => {
         const locationPath = location.getAttribute('href');
         swellnetLocationPaths.push(`${locationPath}/forecast`);
       });
