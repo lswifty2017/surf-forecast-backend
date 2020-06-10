@@ -15,7 +15,7 @@ const port = process.env.PORT || process.env.DEV_PORT;
 app.use('/', routes);
 
 cron.schedule(
-  '30 21 * * *',
+  '05 17 * * *',
   async () => {
     try {
       await SwellnetForecasts.destroy({
