@@ -15,7 +15,7 @@ const port = process.env.PORT || process.env.DEV_PORT;
 app.use('/', routes);
 
 cron.schedule(
-  '05 17 * * *',
+  '35 18 * * *',
   async () => {
     try {
       await SwellnetForecasts.destroy({
@@ -35,6 +35,23 @@ cron.schedule(
     timezone: 'Australia/Sydney',
   }
 );
+
+// Dev
+
+// (async () => {
+//   try {
+//     await SwellnetForecasts.destroy({
+//       where: {
+//         createdAt: {
+//           [Op.lte]: moment().subtract(2, 'days').toDate(),
+//         },
+//       },
+//     });
+//     await scrapeSwellnet();
+//   } catch (err) {
+//     console.log(err);
+//   }
+// })();
 
 app.listen(port, () => {
   console.log(`Listening to requests on http://localhost:${port}`);
