@@ -14,27 +14,27 @@ const port = process.env.PORT || process.env.DEV_PORT;
 
 app.use('/', routes);
 
-cron.schedule(
-  '20 20 * * *',
-  async () => {
-    try {
-      await SwellnetForecasts.destroy({
-        where: {
-          createdAt: {
-            [Op.lte]: moment().subtract(2, 'days').toDate(),
-          },
-        },
-      });
-      await scrapeSwellnet();
-    } catch (err) {
-      console.log(err);
-    }
-  },
-  {
-    scheduled: true,
-    timezone: 'Australia/Sydney',
-  }
-);
+// cron.schedule(
+//   '20 20 * * *',
+//   async () => {
+//     try {
+//       await SwellnetForecasts.destroy({
+//         where: {
+//           createdAt: {
+//             [Op.lte]: moment().subtract(2, 'days').toDate(),
+//           },
+//         },
+//       });
+//       await scrapeSwellnet();
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   },
+//   {
+//     scheduled: true,
+//     timezone: 'Australia/Sydney',
+//   }
+// );
 
 // Dev
 
