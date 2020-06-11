@@ -21,7 +21,7 @@ const scrapeSwellnet = async () => {
     const swellnetPaths = await scrapeSwellLocations();
     const samplePaths = swellnetPaths.slice(0, 4);
 
-    for (const path of samplePaths) {
+    for (const path of swellnetPaths) {
       const forecastData = await scrapeForecast(path);
       const formattedData = formatForecastData(forecastData);
       bulkData = bulkData.concat(formattedData);
