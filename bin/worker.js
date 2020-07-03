@@ -1,4 +1,5 @@
 const scrapeSwellnet = require('../scrapers/swellnet/swellnet-scraper');
+const SwellnetForecasts = require('../models/schemas/swellnet-forecasts');
 
 (async () => {
   console.log('Cron jobs starting...');
