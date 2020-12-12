@@ -1,18 +1,17 @@
 const scrapeSwellnet = require('../scrapers/swellnet/swellnet-scraper');
-const SwellnetForecasts = require('../models/schemas/swellnet-forecasts');
-const { Op } = require('sequelize');
-const moment = require('moment');
+const connectMongoDb = require('../models/waver-mongo-db');
 
 (async () => {
   console.log('Cron jobs starting...');
   try {
-    await SwellnetForecasts.destroy({
-      where: {
-        createdAt: {
-          [Op.lte]: moment().subtract(2, 'days').toDate(),
-        },
+    const client = await connectMongoDb('surf-forecast-db');
+
+    await client.collection('swellnet-forecast-data-aus').deleteMany({
+      date: {
+        $lte: moment().subtract(3, 'days').toDate(),
       },
     });
+
     await scrapeSwellnet();
   } catch (err) {
     console.log(err);

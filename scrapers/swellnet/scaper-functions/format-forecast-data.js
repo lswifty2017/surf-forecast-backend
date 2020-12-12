@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-const formatForecastData = forecasts => {
+const formatForecastData = (forecasts) => {
   const formattedForecasts = forecasts.map(
     ({
       beach,
@@ -17,7 +17,7 @@ const formatForecastData = forecasts => {
       primary_swell_height,
       secondary_swell_direction,
       secondary_swell_period,
-      secondary_swell_height
+      secondary_swell_height,
     }) => {
       const formattedForecast = {};
 
@@ -62,6 +62,7 @@ const formatForecastData = forecasts => {
       formattedForecast['surf_height'] = surf_height
         ? surf_height.split('f')[0]
         : null;
+      formattedForecast['date_created'] = new Date();
 
       return formattedForecast;
     }

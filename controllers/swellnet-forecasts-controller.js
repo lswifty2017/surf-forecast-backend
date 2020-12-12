@@ -1,4 +1,3 @@
-const SwellnetSpreadsheet = require('../models/swellnet-spreadsheet');
 const SwellnetForecasts = require('../models/schemas/swellnet-forecasts');
 const scrapeSwellnet = require('../scrapers/swellnet/swellnet-scraper');
 const { Op } = require('sequelize');

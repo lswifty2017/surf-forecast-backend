@@ -5,8 +5,9 @@ const formatForecastData = require('./scaper-functions/format-forecast-data');
 const createNullReport = require('./scaper-functions/scrape-null-report');
 const swellnetReportEmail = require('../../lib/mailer/swellnet-report/swellnet-report-email');
 const updateSwellnetSheet = require('../../lib/google-sheets/update-swellnet-sheet');
+const connectMongoDb = require('../../models/waver-mongo-db');
 
-const scrapeSwellnet = async () => {
+const scrapeSwellnet = async (dev) => {
   try {
     let scrapeTimer = 0;
     let scrapeCount = 0;
@@ -19,9 +20,9 @@ const scrapeSwellnet = async () => {
     console.log('Scraping swellnet...');
 
     const swellnetPaths = await scrapeSwellLocations();
-    const samplePaths = swellnetPaths.slice(0, 4);
+    const paths = dev ? swellnetPaths.slice(0, 1) : swellnetPaths;
 
-    for (const path of swellnetPaths) {
+    for (const path of paths) {
       const forecastData = await scrapeForecast(path);
       const formattedData = formatForecastData(forecastData);
       bulkData = bulkData.concat(formattedData);
@@ -32,11 +33,19 @@ const scrapeSwellnet = async () => {
       );
     }
 
-    const scrapeReport = createNullReport(bulkData);
-    await swellnetReportEmail(scrapeReport);
+    const client = await connectMongoDb('surf-forecast-db');
 
-    await SwellnetForecasts.bulkCreate(bulkData);
-    await updateSwellnetSheet(bulkData);
+    console.log('Connected to connectMongoDb.');
+    console.log('Bulk inserting data into swellnet-forecasts');
+    await client.collection('swellnet-forecast-data-aus').insertMany(bulkData);
+
+    // await SwellnetForecasts.bulkCreate(bulkData);
+
+    if (!dev) {
+      const scrapeReport = createNullReport(bulkData);
+      await swellnetReportEmail(scrapeReport);
+      await updateSwellnetSheet(bulkData);
+    }
 
     console.log('Bulk swellnet data imported into db');
     console.log(

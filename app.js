@@ -40,15 +40,7 @@ app.use('/', routes);
 
 // (async () => {
 //   try {
-//     await SwellnetForecasts.destroy({ truncate: true });
-//     await SwellnetForecasts.destroy({
-//       where: {
-//         createdAt: {
-//           [Op.lte]: moment().subtract(2, 'days').toDate(),
-//         },
-//       },
-//     });
-//     await scrapeSwellnet();
+//     await scrapeSwellnet(true);
 //   } catch (err) {
 //     console.log(err);
 //   }
