@@ -1,6 +1,8 @@
-const scrapeSwellnet = require('../scrapers/swellnet/swellnet-scraper');
-const connectMongoDb = require('../models/waver-mongo-db');
+require('dotenv').config();
+const scrapeSwellnet = require('../src/scrapers/swellnet/swellnet-scraper')
+const connectMongoDb = require('../src/models/waver-mongo-db');
 const moment = require('moment');
+
 
 (async () => {
   console.log('Cron jobs starting...');
